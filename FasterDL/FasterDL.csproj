@@ -31,6 +31,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,6 +62,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICSharpCode.SharpZipLib\BZip2\BZip2Constants.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\BZip2\BZip2Exception.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\BZip2\BZip2InputStream.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\BZip2\BZip2OutputStream.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Checksum\Adler32.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Checksum\BZip2Crc.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Checksum\Crc32.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Checksum\IChecksum.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\FileSystemScanner.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\INameTransform.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\IScanFilter.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\NameFilter.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\PathFilter.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\StreamUtils.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\Core\WindowsPathUtils.cs" />
+    <Compile Include="FastDLFile.cs" />
+    <Compile Include="ICSharpCode.SharpZipLib\SharpZipBaseException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
