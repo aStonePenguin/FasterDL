@@ -28,10 +28,10 @@ namespace FasterDL
                 Console.CursorLeft = 0;
                 Console.CursorTop = 0;
 
-                Console.Write($"Compressing files... ");
-                Console.CursorLeft = 21;
+                Console.Write($"Running... ");
+                Console.CursorLeft = 11;
                 Console.Write("[");
-                Console.CursorLeft = 22;
+                Console.CursorLeft = 12;
 
                 double perc = (FinishedFiles / TotalFiles);
                 int finished = Convert.ToInt32(50 * perc);
@@ -39,15 +39,15 @@ namespace FasterDL
                 Console.ForegroundColor = ConsoleColor.Black;
                 for (int i = 0; i < 50; i++)
                 {
-                    Console.CursorLeft = 23 + i;
+                    Console.CursorLeft = 13 + i;
                     Console.BackgroundColor = i <= finished ? ConsoleColor.Green : ConsoleColor.Gray;
                     Console.Write(i <= finished ? "#" : "-");
                 }
 
-                Console.CursorLeft = 74;
+                Console.CursorLeft = 64;
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.Write($"] - {FinishedFiles}/{TotalFiles} files - {Convert.ToInt32(perc * 100)}%");
+                Console.Write($"] - {FinishedFiles}/{TotalFiles} - {Convert.ToInt32(perc * 100)}%");
                 
                 if (perc >= 1)
                     ProgressThread.Abort();
