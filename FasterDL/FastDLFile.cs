@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Diagnostics;
 using ICSharpCode.SharpZipLib.BZip2;
 
 namespace FasterDL
@@ -114,21 +115,42 @@ namespace FasterDL
         private void Copy()
             => Info.CopyTo(OutputCopyAbsolutePath);
 
-        private void Compress()
+        private void CompressInternal()
         {
             using (FileStream OriginFile = Info.OpenRead())
             using (FileStream CompressedFile = OutputInfo.Create())
             using (BZip2OutputStream BzipOutput = new BZip2OutputStream(CompressedFile, 9))
                 ICSharpCode.SharpZipLib.Core.StreamUtils.Copy(OriginFile, BzipOutput, new byte[4096]);
-        } 
+        }
 
-        public void Run()
+        private void Compress7zip()
+        {
+            using (Process proc = new Process())
+            {
+                proc.StartInfo = new ProcessStartInfo
+                {
+                    FileName = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\7-Zip\7z.exe",
+                    Arguments = $"a -tbzip2 -mx9 \"{OutputCompressedAbsolutePath}\" \"{OutputCopyAbsolutePath}\" -mmt off",
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                proc.Start();
+                proc.WaitForExit();
+            }
+        }
+
+        public void Run(bool use7zip = false)
         {
             if (!OutputInfo.Directory.Exists)
                 OutputInfo.Directory.Create();
 
             Copy();
-            Compress();
+
+            if (use7zip)
+                Compress7zip();
+            else
+                CompressInternal();
         }
     }
 }

@@ -9,10 +9,11 @@ namespace FasterDL
 {
     class Program
     {
+        private static bool Use7zip = File.Exists($@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\7-Zip\7z.exe");
         private static string Folder;
-        private static double TotalFiles;
+        private static int TotalFiles;
         private static int ValidFiles = 0;
-        private static double FinishedFiles = 0;
+        private static int FinishedFiles = 0;
         private static long FileSize = 0;
         private static long OutputFileSize = 0;
         private static List<string> Resources = new List<string> { };
@@ -33,7 +34,7 @@ namespace FasterDL
                 Console.Write("[");
                 Console.CursorLeft = 12;
 
-                double perc = (FinishedFiles / TotalFiles);
+                double perc = ((double)FinishedFiles / TotalFiles);
                 int finished = Convert.ToInt32(50 * perc);
 
                 Console.ForegroundColor = ConsoleColor.Black;
@@ -64,17 +65,18 @@ namespace FasterDL
 
             if (!file.IsUseless)
             {
-                ValidFiles++;
-                file.Run();
+                file.Run(Use7zip);
 
                 if (file.Info.Extension != "bsp")
-                    Resources.Add(file.Resource);
+                    lock (Resources)
+                        Resources.Add(file.Resource);
 
-                FileSize += file.Info.Length;
-                OutputFileSize += file.OutputInfo.Length;
+                Interlocked.Increment(ref ValidFiles);
+                Interlocked.Add(ref FileSize, file.Info.Length);
+                Interlocked.Add(ref OutputFileSize, file.OutputInfo.Length);
             }
 
-            FinishedFiles++;
+            Interlocked.Increment(ref FinishedFiles);
         }
 
         private static bool IsAddonFormat(string dir)
@@ -96,7 +98,7 @@ namespace FasterDL
         static void Main(string[] args)
         {
             Console.Clear(); 
-            Console.Title = "FasterDL";
+            Console.Title = $"FasterDL{(Use7zip ? " - 7zip" : "")}";
 
             if (args.Length < 1)
             {
@@ -144,7 +146,6 @@ namespace FasterDL
                 foreach (string v in Directory.GetDirectories(Folder))
                     if (IsAddonFormat(v.Substring(v.LastIndexOf(@"\") + 1)))
                     {
-
                         createresource = true;
                         break;
                     }
