@@ -130,7 +130,7 @@ namespace FasterDL
                 proc.StartInfo = new ProcessStartInfo
                 {
                     FileName = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\7-Zip\7z.exe",
-                    Arguments = $"a -tbzip2 -mx9 \"{OutputCompressedAbsolutePath}\" \"{OutputCopyAbsolutePath}\" -mmt off",
+                    Arguments = $"a -tbzip2 -mx9 \"{OutputCompressedAbsolutePath}\" \"{OutputCopyAbsolutePath}\" -mmt=off",
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };

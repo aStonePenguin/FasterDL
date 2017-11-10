@@ -158,7 +158,7 @@ namespace FasterDL
                 string luafolder = $"{outputfolder}/lua/autorun/server";
                 Directory.CreateDirectory(luafolder);
 
-                using (StreamWriter ResourceFile = new StreamWriter($"{luafolder}/fasterdl {DateTime.Now.ToString("yyyy-dd-M HH.mm.ss")}.lua"))
+                using (StreamWriter ResourceFile = new StreamWriter($"{luafolder}/fasterdl {DateTime.Now.ToString("yyyy_dd_M HH_mm_ss")}.lua"))
                     foreach (string v in Resources)
                         ResourceFile.WriteLine($"resource.AddSingleFile'{v}'");
             }
