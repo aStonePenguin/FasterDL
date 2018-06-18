@@ -71,6 +71,7 @@ namespace FasterDL
                     case ".ogg":
                     case ".pcf":
                     case ".ttf":
+                    case ".otf":
                         return (Info.Name.EndsWith(".xbox.vtx") || Info.Name.EndsWith(".sw.vtx"));
                 }
 
